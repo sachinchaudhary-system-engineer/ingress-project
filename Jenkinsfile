@@ -74,9 +74,10 @@ pipeline {
                     kubectl apply -f K8s/
 
                     kubectl set image deployment/images-deployment \
-                        images-container=${USER_DOCKER}/${APP_NAME}:${IMAGE_TAG}
+                        images-container=${USER_DOCKER}/${APP_NAME}:${IMAGE_TAG} -n jenkins
 
-                    kubectl rollout status deployment/images-deployment
+                    kubectl rollout restart deployment/images-deployment -n jenkins
+                    kubectl rollout status deployment/images-deployment -n jenkins
                 '''
             }
         }
