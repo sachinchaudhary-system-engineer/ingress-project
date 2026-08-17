@@ -5,6 +5,7 @@ pipeline {
         APP_NAME  = "my-app"
         IMAGE_TAG = "${BUILD_NUMBER}"
         USER_DOCKER = "chaudharysachin"
+        SONAR_SCANNER = tool 'SonarScanner'
     }
 
     stages {
@@ -19,7 +20,9 @@ pipeline {
         stage("SonarQube Analysis") {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
+                   sh '''
+                ${SONAR_SCANNER}/bin/sonar-scanner
+                  '''
                 }
             }
         }
